@@ -15,41 +15,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
       
-      - run: npm install
-      - run: npm run sources 
+      - name: Install
+        run: npm install
       
-      - name: Build and Mirror Structure
-        run: |
-          # 1. 告诉 SvelteKit 根目录是 /myEvidenceFiles
-          # 2. 执行构建
-          npm run build
+      - name: Extract Sources
+        run: npm run sources 
+      
+      - name: Build with Subpath Awareness
+        # 核心：通过 VITE_SVELTEKIT_BASE 告诉 SvelteKit 根目录已变
+        run: npm run build
         env:
           EVIDENCE_SITE_URL: "https://edwardwoodhub.github.io/myEvidenceFiles"
           VITE_SVELTEKIT_BASE: "/myEvidenceFiles"
 
-      - name: Implement "Folder Move" Strategy
+      - name: Physical Mirroring (挪文件夹策略)
         run: |
-          # 这一步就是你提议的：在产物里造一个同名文件夹
-          # 这样当你访问 .../myEvidenceFiles/ 时，GitHub 会自动进入这个文件夹
-          mkdir -p build_new/myEvidenceFiles
-          cp -r build/* build_new/myEvidenceFiles/
+          # 1. 创建一个名为 dist 的新目录作为部署根目录
+          # 2. 在里面建一个和你仓库名一模一样的子文件夹
+          mkdir -p dist/myEvidenceFiles
           
-          # 关键：把 .nojekyll 放在最外层，防止 GitHub 屏蔽下划线文件夹
-          touch build_new/.nojekyll
+          # 3. 将构建出来的所有文件物理搬迁到这个子文件夹里
+          cp -r build/* dist/myEvidenceFiles/
           
-          # 验证物理路径：你应该能看到 build_new/myEvidenceFiles/_app
-          ls -R build_new/myEvidenceFiles | head -n 10
+          # 4. 创建通行证，防止 GitHub 屏蔽下划线文件夹
+          touch dist/.nojekyll
+          
+          echo "--- 物理路径对齐完成 ---"
+          ls -R dist/myEvidenceFiles | head -n 10
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build_new' # 部署这个重新编排过的目录
+          path: 'dist' # 关键：部署这个重新编排过的目录
 
   deploy:
     needs: build
