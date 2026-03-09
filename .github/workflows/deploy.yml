@@ -28,32 +28,32 @@ jobs:
       - name: Extract Sources
         run: npm run sources 
       
-      - name: Build and Global Path Fix
+      - name: Build and Surgical Path Fix
         run: |
-          # 1. 正常构建
+          # 1. 正常执行构建
           npm run build
           
-          # 2. 【全量物理手术】
-          # 定义需要修正的目标类型和路径模式
-          TARGET_FILES='\( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.webmanifest" \)'
-          SUB_PATH="/myEvidenceFiles"
-
-          # 强制替换所有核心文件夹的引用
-          find build -type f $TARGET_FILES -exec sed -i "s|/_app/|$SUB_PATH/_app/|g" {} +
-          find build -type f $TARGET_FILES -exec sed -i "s|/data/|$SUB_PATH/data/|g" {} +
+          # 2. 【分步精准手术】不使用变量，避免转义错误
           
-          # 修正特定的 HTML 属性（处理图片、链接、Manifest、Favicon）
-          find build -type f -name "*.html" -exec sed -i "s|src=\"/|src=\"$SUB_PATH/|g" {} +
-          find build -type f -name "*.html" -exec sed -i "s|href=\"/|href=\"$SUB_PATH/|g" {} +
-          find build -type f -name "*.html" -exec sed -i "s|/manifest.webmanifest|$SUB_PATH/manifest.webmanifest|g" {} +
-          find build -type f -name "*.html" -exec sed -i "s|/favicon.ico|$SUB_PATH/favicon.ico|g" {} +
+          # 修正 HTML 里的资源引用
+          find build -type f -name "*.html" -exec sed -i 's|src="/|src="/myEvidenceFiles/|g' {} +
+          find build -type f -name "*.html" -exec sed -i 's|href="/|href="/myEvidenceFiles/|g' {} +
+          
+          # 修正 JS 里的动态引用（解决 404 的核心）
+          find build -type f -name "*.js" -exec sed -i 's|/_app/|/myEvidenceFiles/_app/|g' {} +
+          find build -type f -name "*.js" -exec sed -i 's|/data/|/myEvidenceFiles/data/|g' {} +
+          
+          # 修正 CSS 里的字体引用（解决 Inter 字体 404）
+          find build -type f -name "*.css" -exec sed -i 's|/_app/|/myEvidenceFiles/_app/|g' {} +
+          
+          # 修正 Manifest 和 Favicon
+          find build -type f -name "*.html" -exec sed -i 's|/manifest.webmanifest|/myEvidenceFiles/manifest.webmanifest|g' {} +
+          find build -type f -name "*.html" -exec sed -i 's|/favicon.ico|/myEvidenceFiles/favicon.ico|g' {} +
 
-          # 3. 解决 GitHub Pages 的下划线屏蔽
+          # 3. 解决 GitHub Pages 的下划线屏蔽（通行证）
           touch build/.nojekyll
           
-          echo "--- 全量物理路径修正完成 ---"
-          # 验证首页的 JS 入口路径是否正确
-          grep -o 'src="/myEvidenceFiles/_app/[^"]*"' build/index.html | head -n 3
+          echo "--- 路径修正手术完成 ---"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
