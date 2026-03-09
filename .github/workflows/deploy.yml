@@ -2,8 +2,8 @@ name: Deploy Evidence Site
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ]         # 1. 每次推送代码或上传数据时运行
+  workflow_dispatch:           # 2. 允许在 GitHub 网页上手动点击 "Run workflow"
 
 permissions:
   contents: read
@@ -15,25 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
       
-      - run: npm install
-      - run: npm run sources 
+      - name: Install dependencies
+        run: npm install
       
-      # 这里是关键：强制注入 base 路径，并解决下划线文件夹被 GitHub 屏蔽的问题
-      - name: Build with Fixed Base Path
+      - name: Extract Data Sources
+        run: npm run sources 
+      
+      # 【核心补丁】强制注入子路径并解除 GitHub 屏蔽
+      - name: Build with Subfolder Path
         run: |
+          # 1. 执行构建
           npm run build
-          # 这一行解决所有的 404 权限问题
+          # 2. 核心补丁：创建 .nojekyll 文件，强制 GitHub Pages 开放 _app 文件夹（解决 404）
           touch build/.nojekyll
         env:
-          # 必须同时设置这两个变量，确保 Vite 插件和 Evidence 核心同时感知路径
+          # 三重保险：确保 Evidence 及其底层的 SvelteKit 引擎都能识别二级目录
           EVIDENCE_SITE_URL: "https://edwardwoodhub.github.io/myEvidenceFiles"
           BASE_PATH: "/myEvidenceFiles"
+          VITE_SVELTEKIT_BASE: "/myEvidenceFiles"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
