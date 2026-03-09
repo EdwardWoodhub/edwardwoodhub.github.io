@@ -2,8 +2,8 @@ name: Deploy Evidence Site
 
 on:
   push:
-    branches: [ main ]         # 1. 每次推送代码或上传数据时运行
-  workflow_dispatch:           # 2. 允许在 GitHub 网页上手动点击 "Run workflow"
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,24 +22,33 @@ jobs:
           node-version: 22
           cache: 'npm'
       
-      - name: Install dependencies
+      - name: Install
         run: npm install
       
-      - name: Extract Data Sources
+      - name: Extract Sources
         run: npm run sources 
       
-      # 【核心补丁】强制注入子路径并解除 GitHub 屏蔽
-      - name: Build with Subfolder Path
+      - name: Build and Surgical Path Fix
         run: |
-          # 1. 执行构建
+          # 1. 正常执行构建
           npm run build
-          # 2. 核心补丁：创建 .nojekyll 文件，强制 GitHub Pages 开放 _app 文件夹（解决 404）
+          
+          # 2. 【核心手术】强制修正路径：将 / 替换为 /myEvidenceFiles/
+          # 修正 HTML 中的资源引用
+          find build -type f -name "*.html" -exec sed -i 's|src="/|src="/myEvidenceFiles/|g' {} +
+          find build -type f -name "*.html" -exec sed -i 's|href="/|href="/myEvidenceFiles/|g' {} +
+          
+          # 修正 JS 中的动态路径引用 (处理 _app 文件夹)
+          find build -type f -name "*.js" -exec sed -i 's|/_app/|/myEvidenceFiles/_app/|g' {} +
+          
+          # 3. 修正数据路径 (处理 /data 文件夹，解决 Loading 问题)
+          find build -type f -name "*.js" -exec sed -i 's|/data/|/myEvidenceFiles/data/|g' {} +
+
+          # 4. 解除 GitHub Pages 的下划线屏蔽 (极其重要)
           touch build/.nojekyll
-        env:
-          # 三重保险：确保 Evidence 及其底层的 SvelteKit 引擎都能识别二级目录
-          EVIDENCE_SITE_URL: "https://edwardwoodhub.github.io/myEvidenceFiles"
-          BASE_PATH: "/myEvidenceFiles"
-          VITE_SVELTEKIT_BASE: "/myEvidenceFiles"
+          
+          echo "--- 路径修正手术完成 ---"
+          grep -o 'src="/myEvidenceFiles/[^"]*"' build/index.html | head -n 3
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
