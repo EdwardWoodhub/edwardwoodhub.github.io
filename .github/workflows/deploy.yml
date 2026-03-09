@@ -22,32 +22,38 @@ jobs:
           node-version: 22
           cache: 'npm'
       
-      - name: Install & Source
-        run: |
-          npm install
-          npm run sources
+      - name: Install
+        run: npm install
       
-      - name: Build and Relativize
+      - name: Extract Sources
+        run: npm run sources 
+      
+      - name: Build and Physical Path Alignment
         run: |
           # 1. 执行标准构建
           npm run build
           
-          # 2. 【核心手术】将所有绝对路径降级为相对路径
-          # 这样浏览器就会在当前目录下寻找 _app 和 data 文件夹
-          # 我们只针对 src="/ 和 href="/ 这种标准的 HTML 属性进行操作
-          find build -type f -name "*.html" -exec sed -i 's|src="/|src="./|g' {} +
-          find build -type f -name "*.html" -exec sed -i 's|href="/|href="./|g' {} +
+          # 2. 【核心手术】不再玩相对路径，而是强行把所有绝对路径指向你的仓库名
+          # 这样能解决 JS 内部动态加载产生的 404 错误
+          REPO="myEvidenceFiles"
           
-          # 3. 【精准修复 JS】让 JS 内部的动态导入也变成相对路径
-          # 我们把 "/_app/" 替换为 "./_app/"，把 "/data/" 替换为 "./data/"
-          find build -type f -name "*.js" -exec sed -i 's|"/_app/|"./_app/|g' {} +
-          find build -type f -name "*.js" -exec sed -i 's|"/data/|"./data/|g' {} +
+          # 对 HTML, JS, CSS 进行“全量路径注入”
+          # 只要看到 /_app/ 或 /data/，就强制变成 /myEvidenceFiles/_app/
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i "s|/_app/|/$REPO/_app/|g" {} +
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i "s|/data/|/$REPO/data/|g" {} +
+          
+          # 针对 HTML 里的 src 和 href 补齐路径
+          find build -type f -name "*.html" -exec sed -i "s|src=\"/|src=\"/$REPO/|g" {} +
+          find build -type f -name "*.html" -exec sed -i "s|href=\"/|href=\"/$REPO/|g" {} +
 
-          # 4. 【解决下划线屏蔽】
-          # 如果没有这个文件，GitHub 绝对不会让你访问 _app 文件夹
+          # 3. 【解决字体 404】修正 CSS 里的字体 url 引用
+          find build -type f -name "*.css" -exec sed -i "s|url(/|url(/$REPO/|g" {} +
+
+          # 4. 【关键通行证】创建 .nojekyll
+          # 没有这个文件，GitHub 绝对会屏蔽 _app 文件夹（导致 404）
           touch build/.nojekyll
           
-          echo "--- 相对路径转换完成 ---"
+          echo "--- 物理路径补丁已注入 ---"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
