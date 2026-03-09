@@ -15,45 +15,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
       
-      - name: Install
-        run: npm install
+      - run: npm install
+      - run: npm run sources 
       
-      - name: Extract Sources
-        run: npm run sources 
-      
-      - name: Build and Surgical Path Fix
+      - name: Build and Precision Path Fix
         run: |
-          # 1. 正常执行构建
+          # 1. 执行构建
           npm run build
           
-          # 2. 【分步精准手术】不使用变量，避免转义错误
+          # 2. 【核心手术】只针对特定关键词进行替换，避免“套娃”
+          # 这一组命令涵盖了所有的 JS, CSS, HTML, 和 Manifest 文件
+          # 我们不再匹配 src="/，而是匹配 /_app/ 这种唯一的标识符
           
-          # 修正 HTML 里的资源引用
-          find build -type f -name "*.html" -exec sed -i 's|src="/|src="/myEvidenceFiles/|g' {} +
-          find build -type f -name "*.html" -exec sed -i 's|href="/|href="/myEvidenceFiles/|g' {} +
-          
-          # 修正 JS 里的动态引用（解决 404 的核心）
-          find build -type f -name "*.js" -exec sed -i 's|/_app/|/myEvidenceFiles/_app/|g' {} +
-          find build -type f -name "*.js" -exec sed -i 's|/data/|/myEvidenceFiles/data/|g' {} +
-          
-          # 修正 CSS 里的字体引用（解决 Inter 字体 404）
-          find build -type f -name "*.css" -exec sed -i 's|/_app/|/myEvidenceFiles/_app/|g' {} +
-          
-          # 修正 Manifest 和 Favicon
-          find build -type f -name "*.html" -exec sed -i 's|/manifest.webmanifest|/myEvidenceFiles/manifest.webmanifest|g' {} +
-          find build -type f -name "*.html" -exec sed -i 's|/favicon.ico|/myEvidenceFiles/favicon.ico|g' {} +
+          # 定义目标文件和子路径
+          SUB="/myEvidenceFiles"
+          FILES=$(find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.webmanifest" \))
 
-          # 3. 解决 GitHub Pages 的下划线屏蔽（通行证）
+          for f in $FILES; do
+            # 修正 _app 路径 (所有的 JS, CSS 资源)
+            sed -i "s|/_app/|$SUB/_app/|g" "$f"
+            # 修正 data 路径 (所有的图表数据)
+            sed -i "s|/data/|$SUB/data/|g" "$f"
+            # 修正 manifest 路径
+            sed -i "s|/manifest.webmanifest|$SUB/manifest.webmanifest|g" "$f"
+            # 修正 favicon 路径
+            sed -i "s|/favicon.ico|$SUB/favicon.ico|g" "$f"
+            # 修正图片和文字链接 (匹配引号后的反斜杠)
+            sed -i "s|\"/\([^/]\)|\"$SUB/\1|g" "$f"
+          done
+
+          # 3. 解决 GitHub Pages 的下划线屏蔽
           touch build/.nojekyll
           
-          echo "--- 路径修正手术完成 ---"
+          echo "--- 路径精准修正完成 ---"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
