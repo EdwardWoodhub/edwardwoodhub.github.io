@@ -24,22 +24,28 @@ jobs:
       - run: npm install
       - run: npm run sources 
       
-      - name: Build and Relative Path Hack
+      - name: Nuclear Path Prefixing
         run: |
+          # 1. 执行标准构建
           npm run build
           
-          # 1. 进入构建目录
-          cd build
+          # 2. 【核能替换】不限文件类型，直接针对 build 目录下所有文本文件执行全局替换
+          # 定义你的仓库前缀
+          SUB="/myEvidenceFiles"
           
-          # 2. 手术：把所有以 " / " 开头的引用，全部改为 " ./ " (变成相对路径)
-          # 这是最暴力的解法，但能完美配合你的“挪文件夹”逻辑
-          find . -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i 's|src="/|src="./|g' {} +
-          find . -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i 's|href="/|href="./|g' {} +
+          # 使用 LC_ALL=C 确保 sed 处理混淆后的 JS 文件时不会因为编码问题报错
+          # 我们针对三个核心特征路径进行替换：/_app/、/data/、/manifest.webmanifest
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.webmanifest" \) -print0 | xargs -0 sed -i "s|/_app/|$SUB/_app/|g"
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -print0 | xargs -0 sed -i "s|/data/|$SUB/data/|g"
+          find build -type f -name "*.html" -print0 | xargs -0 sed -i "s|href=\"/|href=\"$SUB/|g"
+          find build -type f -name "*.html" -print0 | xargs -0 sed -i "s|src=\"/|src=\"$SUB/|g"
           
-          # 3. 补上通行证
-          touch .nojekyll
+          # 3. 【生死关头】创建 .nojekyll 文件
+          # 如果没有这个文件，GitHub 会因为 _app 文件夹带下划线而拒绝访问其中的资源（404）
+          # 你的 Inter 字体 404 很可能就是因为这个原因
+          touch build/.nojekyll
           
-          echo "--- 相对路径转换完成 ---"
+          echo "--- 全量物理路径补丁已打入 ---"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
