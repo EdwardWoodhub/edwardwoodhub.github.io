@@ -24,6 +24,7 @@ jobs:
           cache: 'npm'
       
       - run: npm install
+      - run: npm run sources
       - run: npm run build
 
       - name: Upload artifact
