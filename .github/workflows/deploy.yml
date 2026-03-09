@@ -15,45 +15,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
       
-      - name: Install
-        run: npm install
-      
-      - name: Extract Sources
-        run: npm run sources 
-      
-      - name: Build with Subpath Awareness
-        # 核心：通过 VITE_SVELTEKIT_BASE 告诉 SvelteKit 根目录已变
-        run: npm run build
-        env:
-          EVIDENCE_SITE_URL: "https://edwardwoodhub.github.io/myEvidenceFiles"
-          VITE_SVELTEKIT_BASE: "/myEvidenceFiles"
-
-      - name: Physical Mirroring (挪文件夹策略)
+      - name: Install & Source
         run: |
-          # 1. 创建一个名为 dist 的新目录作为部署根目录
-          # 2. 在里面建一个和你仓库名一模一样的子文件夹
-          mkdir -p dist/myEvidenceFiles
+          npm install
+          npm run sources
+      
+      - name: Build and Relativize Paths
+        run: |
+          # 1. 执行标准构建
+          npm run build
           
-          # 3. 将构建出来的所有文件物理搬迁到这个子文件夹里
-          cp -r build/* dist/myEvidenceFiles/
+          # 2. 【核心手术】把绝对路径改为相对路径
+          # 这样浏览器就会在当前目录下寻找 _app 和 data 文件夹
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i 's|src="/|src="|g' {} +
+          find build -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -exec sed -i 's|href="/|href="|g' {} +
           
-          # 4. 创建通行证，防止 GitHub 屏蔽下划线文件夹
-          touch dist/.nojekyll
+          # 特别针对 JS 内部的动态导入 (将 "/_app/" 替换为 "_app/")
+          find build -type f -name "*.js" -exec sed -i 's|"/_app/|"_app/|g' {} +
+          find build -type f -name "*.js" -exec sed -i 's|"/data/|"data/|g' {} +
           
-          echo "--- 物理路径对齐完成 ---"
-          ls -R dist/myEvidenceFiles | head -n 10
+          # 3. 加上通行证
+          touch build/.nojekyll
+          
+          echo "--- 相对路径转换完成 ---"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist' # 关键：部署这个重新编排过的目录
+          path: 'build' # 直接上传 build 文件夹，不套娃
 
   deploy:
     needs: build
