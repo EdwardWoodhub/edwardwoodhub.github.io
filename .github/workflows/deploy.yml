@@ -15,38 +15,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache-path: 'myEvidenceFiles/node_modules' # 针对子目录的缓存优化
+          cache: 'npm'
       
-      - name: Install & Build (Subfolder Mode)
-        # 我们进入 myEvidenceFiles 子目录进行所有操作
+      - name: Install & Build
         run: |
-          cd myEvidenceFiles
           npm install
           npm run sources
-          # 关键：告诉 SvelteKit 它的基准路径是仓库名
-          VITE_SVELTEKIT_BASE="/myEvidenceFiles" npm run build
+          npm run build
       
-      - name: Prepare Deployment Artifact
-        # 这一步是为了防止“路径套娃” (Double Nesting)
-        # 我们把子目录构建出的 build/* 提取到外部的 dist 文件夹
-        run: |
-          mkdir -p dist
-          cp -r myEvidenceFiles/build/* dist/
-          # 加上通行证，解决 _app 文件夹 404 的致命问题
-          touch dist/.nojekyll
-          
-          echo "--- 物理结构重组完成 ---"
-          ls -F dist/
+      - name: Add NoJekyll
+        # 即使在主页仓库，这一步也是“救命稻草”
+        # 它强制 GitHub 开放以 _ 开头的文件夹（如 _app）
+        run: touch build/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist' # 部署这个经过“物理平移”后的目录
+          path: 'build'
 
   deploy:
     needs: build
