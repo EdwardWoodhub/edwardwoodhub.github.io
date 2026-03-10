@@ -63,3 +63,16 @@ tooltipTitle="scenario"
     markers={true}
     tooltipTitle="scenario"
 />
+
+<ScatterPlot
+    data={speeds}
+    x="m_s"
+    y="target_speed"
+    series="unit"
+    xLog={true}
+    yLog={true}
+    xMin={1}
+    connected={true}
+    markers={true}
+    tooltipTitle="scenario"
+/>
