@@ -6,7 +6,7 @@ title: 速度单位换算
 
 ---
 
-```sql speeds_long
+```sql speeds_log
 with base as (
     -- 手动计算 Log10。这样 X 轴的 1 代表 10^1=10, 2 代表 10^2=100
     select 
