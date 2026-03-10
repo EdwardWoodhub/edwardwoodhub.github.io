@@ -45,3 +45,16 @@ tooltipTitle="scenario"
     markers={true}
     tooltipTitle="scenario"
 />
+
+
+<LineChart
+    data={speeds}
+    x="m_s"
+    y={['km_h', 'mph', 'knots']}
+    xType=quantitative
+    xLog={true}
+    yLog={true}
+    xMin=1
+    markers={true}
+    tooltipTitle="scenario"
+/>
