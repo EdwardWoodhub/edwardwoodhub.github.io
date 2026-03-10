@@ -1,2 +1,4 @@
-name: speed_things
+name: speed_conversion
 type: csv
+options:
+  filename: speed_conversion.csv
