@@ -21,14 +21,11 @@ order by m_s
 ```
 
 <LineChart
-    data={speeds}
-    x="m_s"
-    y={['km_h', 'mph', 'knots']}
-    xLog={true}
-    yLog={true}
-    xMin=1
-    xType=quantitative
-    markers={true}
-    tooltipTitle="scenario"
+data={speeds}
+x="m_s"
+y={['km_h', 'mph', 'knots']}
+xLog=true
+yLog=true
+markers=true
+tooltipTitle="scenario"
 />
-
