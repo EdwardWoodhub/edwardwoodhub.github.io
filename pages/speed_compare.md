@@ -1,6 +1,10 @@
+---
+title: 速度单位换算全景指南
+---
+
 # 速度单位换算全景指南
 
-本文档包含了常用速度单位（m/s, km/h, mph, Knots, Mach）的换算表、物理逻辑及 Evidence.dev 可视化绘图代码。
+本文档包含常用速度单位（m/s, km/h, mph, Knots, Mach）的对比表、物理换算逻辑及 Evidence.dev 可视化分析。
 
 ---
 
@@ -26,16 +30,18 @@
 
 ## 2. 核心换算公式
 
+[cite_start]作为物理学研究的常用背景 ，以下公式是单位转换的基础：
+
 * **公制转换**：$1 \text{ m/s} = 3.6 \text{ km/h}$
 * **海陆转换**：$1 \text{ knot} = 1.852 \text{ km/h}$
-* **马赫定义**：$M = v / a$（其中 $a$ 为当地声速）
+* **马赫定义**：$M = v / a$（其中 $a$ 为介质中的声速）
 
 ---
 
 ## 3. 可视化分析
 
 ```sql speeds_data
--- 从 speed_things 文件夹下的 speed_conversion.csv 读取数据
+-- 引用数据源 speed_things 下的 speed_conversion 表
 select 
     m_s, 
     km_h, 
@@ -46,7 +52,7 @@ select
 from speed_things.speed_conversion
 order by m_s
 
-## 4.交互式对数坐标图
+交互式对数坐标图
 <LineChart
 data={speeds_data}
 x=m_s
@@ -59,8 +65,8 @@ markers=true
 tooltipTitle=scenario
 />
 
-## 5.绘图说明：
+绘图说明：
 
-对数轴：处理从 1 到 8500 的大跨度数据，确保低速和高速场景都能清晰显示。
+对数轴处理：由于速度跨度极大，对数坐标能让线性转换关系表现为平行线，方便跨量级对比。
 
-场景标注：悬停在数据点上可查看对应的“典型场景”。通过对数轴处理，可以看到不同单位之间的转换关系在图中呈现为完美的平行直线。
+场景交互：悬停可查看具体的物理场景标注。
