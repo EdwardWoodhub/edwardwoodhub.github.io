@@ -1,5 +1,5 @@
 <script>
-    import { ECharts } from '@evidence-dev/component-objects';
+    import { ECharts } from '@evidence-dev/core-components';
 
     // 1. 定义接口属性 (Props)
     export let data;
