@@ -12,6 +12,8 @@ title: 如何讲故事？
 
 # 第三人称视角
 
+[李敖谈弟弟李放](https://www.bilibili.com/video/BV1mRYDzWEBS)
+
 [法国up老路：2000年前，古罗马帝国征服了我的家乡](https://www.bilibili.com/video/BV1YG4y1f7Ur/)
 
 
