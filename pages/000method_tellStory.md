@@ -13,6 +13,8 @@ title: 如何讲故事？
 
 [法国up老路：2000年前，古罗马帝国征服了我的家乡](https://www.bilibili.com/video/BV1YG4y1f7Ur/)
 
+[2025年度狗血抽象巅峰！四个孕妇大战三个妈！万字解说《四喜》](https://www.bilibili.com/video/BV1pUBeBwEcv)
+
 [《文明之旅》第一季](https://www.youtube.com/playlist?list=PL_UnJyWUd40FoM-I5E12C9yGqzWlMRAfV)
 
 [《文明之旅》第二季](https://www.youtube.com/playlist?list=PL_UnJyWUd40FYv_JtHPSZsk9tMdCKQXpo)
