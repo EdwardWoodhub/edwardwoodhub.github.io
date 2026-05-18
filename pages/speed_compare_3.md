@@ -1,5 +1,5 @@
 ---
-title: 自建LogLogChart展示
+title: 自建LogLogChart效果展示
 ---
 
 # 速度单位换算全景图
