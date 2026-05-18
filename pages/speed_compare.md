@@ -1,5 +1,5 @@
 ---
-title: 调用官方LineCharts之效果展示
+title: 官方LineCharts效果展示
 ---
 
 # 速度单位换算Table
