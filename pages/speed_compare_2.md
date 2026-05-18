@@ -1,5 +1,5 @@
 ---
-title: 调用官方ECharts之效果展示
+title: 官方ECharts效果展示
 ---
 
 # 速度单位换算Table
