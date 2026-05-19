@@ -1,5 +1,6 @@
 ---
 title: 海洋纪录片
+full_width: true
 ---
 
 
