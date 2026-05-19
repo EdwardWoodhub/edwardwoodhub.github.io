@@ -1,5 +1,6 @@
 ---
 title: 游戏ABZU
+full_width: true
 ---
 
 
