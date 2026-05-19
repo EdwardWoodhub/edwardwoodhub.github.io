@@ -1,5 +1,6 @@
 ---
 title: 自建LogLogChart效果展示
+full_width: true
 ---
 
 # 速度单位换算全景图
