@@ -1,5 +1,6 @@
 ---
 title: 如何讲故事？
+full_width: true
 ---
 
 # 第一人称视角
