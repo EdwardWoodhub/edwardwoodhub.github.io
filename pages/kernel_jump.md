@@ -1,6 +1,9 @@
 ---
 title: 内核跳跃
+full_width: true
 ---
+
+<div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
 |            | UbuntuBudgie24.04 | popOS24.04              | tuxedoOS             | fedora44                | opensuseLeap16           | slackware15 |
 | ---------- | ----------------- | ----------------------- | -------------------- | ----------------------- | ------------------------ | ----------- |
@@ -12,4 +15,4 @@ title: 内核跳跃
 |            |                   |                         |                      |                         |                          |             |
 |            |                   |                         |                      |                         |                          |             |
 
-
+</div>
