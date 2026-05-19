@@ -1,5 +1,6 @@
 ---
 title: 官方ECharts效果展示
+full_width: true
 ---
 
 # 速度单位换算Table
