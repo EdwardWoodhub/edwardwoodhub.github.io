@@ -1,5 +1,6 @@
 ---
 title: Welcome to Evidence
+full_width: true
 ---
 
 <Details title='How to edit this page'>
