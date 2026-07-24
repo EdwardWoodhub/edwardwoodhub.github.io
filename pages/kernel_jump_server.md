@@ -1,11 +1,11 @@
 ---
-title: 内核跳跃
+title: 内核跳跃(Server)
 full_width: true
 ---
 
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
-|            | UbuntuBudgie24.04 | popOS24.04              | tuxedoOS             | fedora44                | opensuseLeap16           | slackware15 |
+|            | Ubuntu24.04       | popOS24.04              | tuxedoOS             | fedora44                | opensuseLeap16           | slackware15 |
 | ---------- | ----------------- | ----------------------- | -------------------- | ----------------------- | ------------------------ | ----------- |
 | 2026.04.25 | 24.04.4           | 24.04                   | tuxedoOS             | 44.20260422.0           | 16.0                     |             |
 |            | 6.17.0-22-generic | 6.18.7-76061807-generic | 6.17.0-113020-tuxedo | 6.19.10-300.fc44.x86_64 | 6.12.0-160000.28-default |             |
