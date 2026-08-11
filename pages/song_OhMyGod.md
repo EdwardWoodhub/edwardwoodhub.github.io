@@ -17,6 +17,8 @@ full_width: true
 
 [Papi酱生气了《BLACK FILE》｜70年代英国间谍放克主题曲·英文改编](https://www.bilibili.com/video/BV14uM26wEUU/)
 
+[Papi酱《生气了》，但是苏维埃风俄语版](https://www.bilibili.com/video/BV13P3G6EE3t/)
+
 [新宿街头惊现Papi酱《生气了》日文版，火到日本了？](https://www.bilibili.com/video/BV1a53r6PEGz/)
 
 [Papi酱《生气了》迅速火到日本！日文版吓到路人了](https://www.bilibili.com/video/BV1mT3H6TENe/)
