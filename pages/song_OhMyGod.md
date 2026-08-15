@@ -13,6 +13,8 @@ full_width: true
 
 [合集·足不出沪世巡Stay in Shanghai World Tour-吉事堡](https://space.bilibili.com/1447736/lists/8621676)
 
+[合集·Papi酱足不出沪全球巡演-包拯小作坊](https://space.bilibili.com/45818805/lists/8715187)
+
 # 改编单曲
 
 [Papi酱生气了《BLACK FILE》｜70年代英国间谍放克主题曲·英文改编](https://www.bilibili.com/video/BV14uM26wEUU/)
