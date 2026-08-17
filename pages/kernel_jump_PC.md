@@ -19,9 +19,11 @@ full_width: true
 
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
-| slowroll   | tuxedoOS(debian)     |
-| ---------- | -------------------- | 
-|            |                      |
+| slowroll   | tuxedoOS(debian)        |
+| ---------- | ----------------------- | 
+| 2026.08.17 | TUXEDO OS (Debian base) |
+|            | 7.1.6.2-tuxedo-amd64    |
+|            |                         |
 
 </div>
 
