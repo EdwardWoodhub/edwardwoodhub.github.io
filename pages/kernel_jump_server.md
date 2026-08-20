@@ -3,6 +3,8 @@ title: 内核跳跃(Server)
 full_width: true
 ---
 
+Server优先选stable，次选slowroll。
+
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
 | stable     | AlmaLinux                    | 
