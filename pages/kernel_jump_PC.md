@@ -3,6 +3,8 @@ title: 内核跳跃(PC)
 full_width: true
 ---
 
+PC优先选slowroll，次选fastroll。
+
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
 | stable     | tuxedoOS             | opensuse Leap            | 
