@@ -7,17 +7,21 @@ PC优先选slowroll，次选fastroll。
 
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
-| stable     | tuxedoOS             | opensuse Leap            | 
-| ---------- | -------------------- | -----------------------  |
-| 2026.04.25 | TUXEDO OS            | 16.0                     |
-|            | 6.17.0-113020-tuxedo | 6.12.0-160000.28-default |
-| 2026.05.14 | TUXEDO OS            | 16.0                     |
-|            | 6.17.0-118023-tuxedo | 6.12.0-160000.29-default |
-| 2026.07.25 | TUXEDO OS            | 16.0                     |
-|            | 6.17.0-122035-tuxedo | 6.12.0-160000.35-default |
-| 2026.08.18 | TUXEDO OS            | 16.0                     |
-|            | 6.17.0-124040-tuxedo | 6.12.0-160000.35-default |
-|            |                      |                          |
+| stable     | tuxedoOS             | opensuse Leap            | centos Stream          | 
+| ---------- | -------------------- | -----------------------  | ---------------------- |
+| 2026.04.25 | TUXEDO OS            | 16.0                     |                        |
+|            | 6.17.0-113020-tuxedo | 6.12.0-160000.28-default |                        |
+| 2026.05.14 | TUXEDO OS            | 16.0                     |                        |
+|            | 6.17.0-118023-tuxedo | 6.12.0-160000.29-default |                        |
+| 2026.07.25 | TUXEDO OS            | 16.0                     |                        |
+|            | 6.17.0-122035-tuxedo | 6.12.0-160000.35-default |                        |
+| 2026.08.18 | TUXEDO OS            | 16.0                     |                        |
+|            | 6.17.0-124040-tuxedo | 6.12.0-160000.35-default |                        |
+| 2026.08.20 |                      |                          | Bluefin LTS            |
+|            |                      |                          | 6.12.0-128.el10.x86_64 |
+| 2026.08.22 |                      |                          | CentOS Stream 10       |
+|            |                      |                          | 6.12.0-253.el10.x86_64 |
+|            |                      |                          |                        |
 
 </div>
 
