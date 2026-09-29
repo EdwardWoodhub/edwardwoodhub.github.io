@@ -43,7 +43,7 @@ PC优先选slowroll，次选fastroll。
 
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
-| fastroll   | bluebuild                | tuxedoOS(debian)        |
+| fastroll   | fedora                   | tuxedoOS(debian)        |
 | ---------- | ------------------------ | ----------------------- | 
 | 2026.04.25 | 44.20260422.0            |                         |
 |            | 6.19.10-300.fc44.x86_64  |                         |
