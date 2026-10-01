@@ -7,7 +7,7 @@ Server优先选stable，次选slowroll。
 
 <div style="overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch;">
 
-| stable     | AlmaLinux                    | AlmaLinux (bootc)             |
+| stable     | AlmaLinux                    | AlmaLinux                     |
 | ---------- | ---------------------------- | ----------------------------- |  
 | 2026.07.25 | 9.8                          |                               |
 |            | 5.14.0-687.29.1.el9_8.x86_64 |                               |
@@ -15,6 +15,8 @@ Server优先选stable，次选slowroll。
 |            | 5.14.0-687.38.1.el9_8.x86_64 |                               |
 | 2026.08.28 |                              | 10.2                          |
 |            |                              | 6.12.0-211.49.1.el10_2.x86_64 |
+| 2026.09.30 |                              |                               |
+|            |                              |                               |
 |            |                              |                               |
 
 </div>
@@ -27,6 +29,8 @@ Server优先选stable，次选slowroll。
 |            | 7.0.0-28-generic  | 6.18.39                 | 
 | 2026.08.18 | 24.04.4           | 26.05.7813.0dd31db7e6db | 
 |            | 7.0.0-29-generic  | 6.18.44                 | 
+| 2026.09.30 |                   |                         |
+|            |                   |                         |
 |            |                   |                         |
 
 </div>
