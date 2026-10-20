@@ -1,5 +1,5 @@
 ---
-title: Distro Hopping
+title: 发行版跳跃
 full_width: true
 ---
 
