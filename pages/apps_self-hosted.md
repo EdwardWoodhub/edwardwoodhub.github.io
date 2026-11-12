@@ -12,6 +12,7 @@ full_width: true
 
 | 程序 | 类别 | 说明 |
 |------|------|------|
+| **Ayakaleaf Pro** | LaTeX 协作编辑 | Overleaf Community Edition 的开源增强版，官方主推 Docker 部署，浏览器访问的在线协作编辑器 |
 | **Immich** | 照片管理 | 官方主推 Docker，Web + 移动端为主 |
 | **Paperless-ngx** | 文档管理 | 设计之初就是 Web 应用 + Docker |
 | **n8n** | 自动化工作流 | 官方推荐 Docker，界面完全是 Web |
