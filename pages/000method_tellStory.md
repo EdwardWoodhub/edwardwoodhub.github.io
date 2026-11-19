@@ -24,4 +24,6 @@ full_width: true
 
 [合集·乡村爱情](https://space.bilibili.com/3494376669972513/lists/2246759)
 
+[走马上任](https://space.bilibili.com/79061224/lists/9510283)
+
 [2025年度狗血抽象巅峰！四个孕妇大战三个妈！万字解说《四喜》](https://www.bilibili.com/video/BV1pUBeBwEcv)
