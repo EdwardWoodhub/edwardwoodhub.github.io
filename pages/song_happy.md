@@ -7,6 +7,10 @@ full_width: true
 
 [彪哥成名曲竟然是一首浙江歌？｜30 首地名神曲，拼出整个中国](https://www.bilibili.com/video/BV1N2H46GEHV/)
 
+# 慌啥子嘛
+
+[【循环1小时】赵本山《慌啥子嘛》](https://www.bilibili.com/video/BV1CLsK6XEEk/)
+
 # 火红的萨日朗
 
 [用美国西部风打开《火红的萨日朗》](https://www.bilibili.com/video/BV1YPYz6UEMc/)
